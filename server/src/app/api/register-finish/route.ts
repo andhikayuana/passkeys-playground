@@ -1,5 +1,6 @@
 import client from "@/app/lib/mongodb";
 import { verifyRegistrationResponse, VerifyRegistrationResponseOpts } from "@simplewebauthn/server";
+import { Binary } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -28,25 +29,24 @@ export async function POST(request: NextRequest) {
     }
 
     const sessions = db.collection('sessions')
-    const sessionExists = await sessions.countDocuments({ username: username }, { limit: 1 }) === 1
+    const sessionExists = await sessions.countDocuments({ username: username, type: 'register' }, { limit: 1 }) === 1
     if (!sessionExists) {
-      return NextResponse.json({ message: 'user not found, please register start first' }, { status: 404 })
+      return NextResponse.json({ message: 'your session not found, please register start first' }, { status: 404 })
     }
-    const currentSession = await sessions.findOne({ username: username })
+    const currentSession = await sessions.findOne({ username: username, type: 'register' })
 
     const opts: VerifyRegistrationResponseOpts = {
       response: response,
       expectedChallenge: currentSession?.challenge,
       expectedOrigin: process.env.PASSKEY_EXPECTED_ORIGINS?.split(',') || [],
-      expectedRPID: process.env.PASSKEY_RP_ID,
-      requireUserVerification: false
+      expectedRPID: process.env.PASSKEY_RP_ID
     }
 
     const verification = await verifyRegistrationResponse(opts)
     const { verified, registrationInfo } = verification
 
     if (!verified) {
-      return NextResponse.json({ message: 'Not verified' }, { status: 400 })
+      return NextResponse.json({ message: 'verification failed' }, { status: 400 })
     }
 
     const credentials = db.collection('credentials')
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
       username: currentSession?.username,
       webAuthnUserID: currentSession?.user.id,
       id: registrationInfo?.credentialID,
-      publicKey: registrationInfo?.credentialPublicKey,
+      publicKey: new Binary(registrationInfo?.credentialPublicKey),
       counter: registrationInfo?.counter,
       deviceType: registrationInfo?.credentialDeviceType,
       backedUp: registrationInfo?.credentialBackedUp,

@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
             excludeCredentials: passkeys,
             authenticatorSelection: {
                 residentKey: 'required',
-                userVerification: 'preferred'
+                userVerification: 'required'
             }
         }
         const options = await generateRegistrationOptions(opts)
@@ -55,7 +55,8 @@ export async function POST(request: NextRequest) {
         const sessions = db.collection('sessions')
         await sessions.findOneAndUpdate(
             {
-                username: user?.username
+                username: user?.username,
+                type: 'register'
             },
             {
                 $set: { ...options }
