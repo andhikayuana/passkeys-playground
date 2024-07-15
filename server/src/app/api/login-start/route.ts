@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
       .toArray()
 
     const opts: GenerateAuthenticationOptionsOpts = {
-      rpId: process.env.PASSKEY_RP_ID,
+      rpID: process.env.PASSKEY_RP_ID as string,
       allowCredentials: passkeys,
       userVerification: 'required'
     }
@@ -54,8 +54,9 @@ export async function POST(request: NextRequest) {
     )
 
     return NextResponse.json({ ...options })
-  } catch (error) {    
-    return NextResponse.json({ message: error.message }, { status: 500 })
+  } catch (_e) {
+    const e = _e as Error
+    return NextResponse.json({ message: e.message }, { status: 500 })
   } finally {
     await client.close()
   }

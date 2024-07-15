@@ -37,11 +37,11 @@ export async function POST(request: NextRequest) {
             .toArray()
 
         const opts: GenerateRegistrationOptionsOpts = {
-            rpName: process.env.PASSKEY_RP_NAME,
-            rpID: process.env.PASSKEY_RP_ID,
+            rpName: process.env.PASSKEY_RP_NAME as string,
+            rpID: process.env.PASSKEY_RP_ID as string,
             userID: user?._id.id,
-            userName: user?.username,
-            userDisplayName: user?.username,
+            userName: user?.username as string,
+            userDisplayName: user?.username as string,
             timeout: 60000,
             attestationType: 'none',
             excludeCredentials: passkeys,
@@ -68,8 +68,9 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json({ ...options })
 
-    } catch (error) {
-        return NextResponse.json({ message: error.message }, { status: 500 })
+    } catch (_e) {
+        const e = _e as Error
+        return NextResponse.json({ message: e.message }, { status: 500 })
     } finally {
         await client.close()
     }

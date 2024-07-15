@@ -69,8 +69,9 @@ export async function POST(request: NextRequest) {
     const token = jwt.sign({ userId: username }, process.env.JWT_SECRET_KEY || 'secret')
 
     return NextResponse.json({ message: 'verification successfully', token: token })
-  } catch (error) {
-    return NextResponse.json({ message: error.message }, { status: 500 })
+  } catch (_e) {
+    const e = _e as Error
+    return NextResponse.json({ message: e.message }, { status: 500 })
   } finally {
     await client.close()
   }
