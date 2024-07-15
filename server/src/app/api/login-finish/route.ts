@@ -1,6 +1,7 @@
 import client from "@/app/lib/mongodb";
 import { verifyAuthenticationResponse, VerifyAuthenticationResponseOpts } from "@simplewebauthn/server";
 import { NextRequest, NextResponse } from "next/server";
+import jwt from "jsonwebtoken";
 
 export async function POST(request: NextRequest) {
 
@@ -65,7 +66,9 @@ export async function POST(request: NextRequest) {
     await credentials.updateOne({ id: response.id }, { $set: { "counter": authenticationInfo.newCounter } })
     await sessions.deleteOne({ username: username, type: 'login' })
 
-    return NextResponse.json({ message: 'verification successfully', token: 'your token here' })
+    const token = jwt.sign({ userId: username }, process.env.JWT_SECRET_KEY || 'secret')
+
+    return NextResponse.json({ message: 'verification successfully', token: token })
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 })
   } finally {

@@ -2,7 +2,7 @@ import client from "@/app/lib/mongodb";
 import { verifyRegistrationResponse, VerifyRegistrationResponseOpts } from "@simplewebauthn/server";
 import { Binary } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
-
+import jwt from "jsonwebtoken";
 
 export async function POST(request: NextRequest) {
 
@@ -63,8 +63,9 @@ export async function POST(request: NextRequest) {
 
     await sessions.deleteOne({ username: username })
 
-    return NextResponse.json({ message: 'registration successfully' })
+    const token = jwt.sign({ userId: username }, process.env.JWT_SECRET_KEY || 'secret')
 
+    return NextResponse.json({ message: 'registration successfully', token: token })
   } catch (error) {
     return NextResponse.json({ message: error.message }, { status: 500 })
   } finally {
