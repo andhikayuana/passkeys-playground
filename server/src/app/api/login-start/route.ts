@@ -16,9 +16,7 @@ export async function POST(request: NextRequest) {
 
     const db = client.db('passkeys_demo')
     const users = db.collection<User>('users')
-
     const userExists = await users.countDocuments({ username: username }, { limit: 1 }) === 1
-
     if (!userExists) {
       return NextResponse.json({ message: 'user not found, please register start first' }, { status: 404 })
     }

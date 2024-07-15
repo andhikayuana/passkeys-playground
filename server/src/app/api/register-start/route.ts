@@ -20,14 +20,12 @@ export async function POST(request: NextRequest) {
 
         const db = client.db('passkeys_demo')
         const users = db.collection<User>('users')
+        const userEXists = await users.countDocuments({ username: username }) === 1
+        if (!userEXists) {
+            await users.insertOne({ username: username })
+        }
+        const user = await users.findOne({ username: username })
 
-        const user = await users.findOneAndUpdate(
-            { username: username },
-            { $setOnInsert: { username: username } },
-            {
-                upsert: true
-            }
-        )
         const credentials = db.collection('credentials')
         const passkeys = await credentials.find({ username: username })
             .map(passkey => ({ id: passkey.id, transports: passkey.transports}))
