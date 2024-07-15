@@ -7,12 +7,9 @@ export async function POST(request: NextRequest) {
 
   const { username, response } = await request.json()
 
-  if (!username) {
+  const validUsernamePattern = /^[a-zA-Z0-9]{8,}$/;
+  if (!validUsernamePattern.test(username as string)) {
     return NextResponse.json({ message: 'please input your username correctly' }, { status: 400 })
-  }
-
-  if (username.length < 8) {
-    return NextResponse.json({ message: 'your username at least 8 chars' }, { status: 400 })
   }
 
   try {
@@ -54,8 +51,8 @@ export async function POST(request: NextRequest) {
         counter: passkey?.counter,
         transports: passkey?.transports
       }
-    } 
-    
+    }
+
     const verification = await verifyAuthenticationResponse(opts)
     const { verified, authenticationInfo } = verification
 

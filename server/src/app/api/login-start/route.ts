@@ -6,12 +6,9 @@ export async function POST(request: NextRequest) {
 
   const { username }: { username: string } = await request.json()
 
-  if (!username) {
+  const validUsernamePattern = /^[a-zA-Z0-9]{8,}$/;
+  if (!validUsernamePattern.test(username as string)) {
     return NextResponse.json({ message: 'please input your username correctly' }, { status: 400 })
-  }
-
-  if (username.length < 8) {
-    return NextResponse.json({ message: 'your username at least 8 chars' }, { status: 400 })
   }
 
   try {
