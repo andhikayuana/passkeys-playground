@@ -1,10 +1,9 @@
-package coder.anthony.treasure.hunt.navigation
+package id.yuana.passkeys.playground.navigation.navigation
 
 import androidx.navigation.NavOptionsBuilder
 
 sealed class UiEvent {
     object PopBackStack : UiEvent()
-    data class ShowToast(val message: String? = null) : UiEvent()
     object Loading : UiEvent()
     data class Navigate(
         val destinationRoute: String,
@@ -12,5 +11,13 @@ sealed class UiEvent {
         val navOptionsBuilder: (NavOptionsBuilder.() -> Unit)? = null
     ) : UiEvent()
 
-    data class ShowDialog(val message: String? = null) : UiEvent()
+    data class ShowMessage(
+        val type: Type = Type.Success,
+        val message: String
+    ) : UiEvent() {
+        sealed class Type {
+            object Error : Type()
+            object Success : Type()
+        }
+    }
 }

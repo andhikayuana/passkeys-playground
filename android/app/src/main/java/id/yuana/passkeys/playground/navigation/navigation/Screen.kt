@@ -1,4 +1,4 @@
-package coder.anthony.treasure.hunt.navigation
+package id.yuana.passkeys.playground.navigation.navigation
 
 import androidx.navigation.NamedNavArgument
 
@@ -7,7 +7,6 @@ sealed class Screen(
     val args: List<NamedNavArgument> = emptyList()
 ) {
 
-    object Home : Screen(route = "home")
-    object SelectApps : Screen(route = "select-apps")
+    object Welcome : Screen(route = "welcome")
 
 }

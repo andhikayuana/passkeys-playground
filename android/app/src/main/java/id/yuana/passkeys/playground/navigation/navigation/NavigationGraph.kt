@@ -1,4 +1,4 @@
-package coder.anthony.treasure.hunt.navigation
+package id.yuana.passkeys.playground.navigation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
@@ -6,8 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import id.yuana.poc.parentalcontrol.ui.feature.home.HomeScreen
-import id.yuana.poc.parentalcontrol.ui.feature.selectapps.SelectAppsScreen
+import id.yuana.passkeys.playground.ui.feature.welcome.WelcomeScreen
 
 typealias OnNavigate = (UiEvent.Navigate) -> Unit
 typealias OnPopBackStack = () -> Unit
@@ -19,7 +18,7 @@ fun RootNav(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route
+        startDestination = Screen.Welcome.route
     ) {
         RootNavGraph(
             onNavigate = {
@@ -40,10 +39,7 @@ fun NavGraphBuilder.RootNavGraph(
     onNavigate: OnNavigate,
     onPopBackStack: OnPopBackStack,
 ) {
-    composable(route = Screen.Home.route) {
-        HomeScreen(onNavigate = onNavigate)
-    }
-    composable(route = Screen.SelectApps.route) {
-        SelectAppsScreen(onNavigate = onNavigate, onPopBackStack = onPopBackStack)
+    composable(route = Screen.Welcome.route) {
+        WelcomeScreen(onNavigate = onNavigate)
     }
 }
