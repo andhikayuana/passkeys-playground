@@ -40,6 +40,7 @@ export async function POST(request: NextRequest) {
             timeout: 60000,
             attestationType: 'none',
             excludeCredentials: passkeys,
+            supportedAlgorithmIDs: [-7, -257],
             authenticatorSelection: {
                 residentKey: 'required',
                 userVerification: 'required',
