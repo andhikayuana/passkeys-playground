@@ -42,7 +42,8 @@ export async function POST(request: NextRequest) {
             excludeCredentials: passkeys,
             authenticatorSelection: {
                 residentKey: 'required',
-                userVerification: 'required'
+                userVerification: 'required',
+                authenticatorAttachment: 'platform'
             }
         }
         const options = await generateRegistrationOptions(opts)
