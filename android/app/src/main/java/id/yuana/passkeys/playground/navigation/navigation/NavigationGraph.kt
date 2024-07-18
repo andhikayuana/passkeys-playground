@@ -6,6 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import id.yuana.passkeys.playground.ui.feature.home.HomeScreen
+import id.yuana.passkeys.playground.ui.feature.splash.SplashScreen
 import id.yuana.passkeys.playground.ui.feature.welcome.WelcomeScreen
 
 typealias OnNavigate = (UiEvent.Navigate) -> Unit
@@ -18,7 +20,7 @@ fun RootNav(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Welcome.route
+        startDestination = Screen.Splash.route
     ) {
         RootNavGraph(
             onNavigate = {
@@ -39,7 +41,13 @@ fun NavGraphBuilder.RootNavGraph(
     onNavigate: OnNavigate,
     onPopBackStack: OnPopBackStack,
 ) {
+    composable(route = Screen.Splash.route) {
+        SplashScreen(onNavigate = onNavigate)
+    }
     composable(route = Screen.Welcome.route) {
         WelcomeScreen(onNavigate = onNavigate)
+    }
+    composable(route = Screen.Home.route) {
+        HomeScreen(onNavigate = onNavigate)
     }
 }

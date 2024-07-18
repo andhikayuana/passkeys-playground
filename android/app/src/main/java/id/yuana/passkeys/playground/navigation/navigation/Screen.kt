@@ -7,6 +7,8 @@ sealed class Screen(
     val args: List<NamedNavArgument> = emptyList()
 ) {
 
+    object Splash : Screen(route = "splash")
     object Welcome : Screen(route = "welcome")
+    object Home : Screen(route = "home")
 
 }

@@ -1,7 +1,9 @@
 <resources>
-    <string name="app_name">Passkeys Playground Client</string>
+    <string name="app_name">Passkeys Playground Android</string>
     <string name="label_register">Register</string>
     <string name="label_login">Login</string>
     <string name="please_wait">Please wait...</string>
     <string name="please_type_your_username">Please type your username here</string>
+    <string name="hello_user">Hello %s</string>
+    <string name="label_logout">Logout</string>
 </resources>

@@ -23,6 +23,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.credentials.CreatePublicKeyCredentialResponse
 import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.PublicKeyCredential
 import id.yuana.passkeys.playground.R
 import id.yuana.passkeys.playground.navigation.navigation.OnNavigate
 import id.yuana.passkeys.playground.navigation.navigation.UiEvent
@@ -79,6 +81,25 @@ fun WelcomeScreen(
         }
     }
 
+    LaunchedEffect(key1 = state.getPublicKeyCredentialOption) {
+        state.getPublicKeyCredentialOption?.let {
+            try {
+                val getCredentialResponse = credentialManager.getCredential(
+                    context,
+                    GetCredentialRequest(listOf(it))
+                )
+                viewModel.onEvent(
+                    WelcomeEvent.OnGetCredentialResponse(
+                        getCredentialResponse.credential as PublicKeyCredential //assume just for passkeys
+                    )
+                )
+            } catch (e: Exception) {
+                Log.d("YUANA", "ERROR -> ${e.message}")
+                viewModel.handleError(e)
+            }
+        }
+    }
+
     Scaffold {
         Column(
             modifier = Modifier
@@ -95,7 +116,7 @@ fun WelcomeScreen(
                 onValueChange = {
                     viewModel.onEvent(WelcomeEvent.OnUsernameChange(it))
                 },
-                maxLines = 1
+                singleLine = true
             )
             Row(
                 horizontalArrangement = Arrangement.spacedBy(10.dp)

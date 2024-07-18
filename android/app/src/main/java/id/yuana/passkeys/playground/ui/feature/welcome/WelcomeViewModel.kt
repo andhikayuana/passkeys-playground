@@ -1,12 +1,13 @@
 package id.yuana.passkeys.playground.ui.feature.welcome
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.credentials.CreatePublicKeyCredentialRequest
+import androidx.credentials.GetPublicKeyCredentialOption
 import androidx.lifecycle.viewModelScope
 import id.yuana.passkeys.playground.base.BaseViewModel
 import id.yuana.passkeys.playground.data.repository.AppRepository
 import id.yuana.passkeys.playground.di.json
+import id.yuana.passkeys.playground.navigation.navigation.Screen
 import id.yuana.passkeys.playground.navigation.navigation.UiEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +15,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.getAndUpdate
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.jsonPrimitive
 
 class WelcomeViewModel(
     private val appRepository: AppRepository,
@@ -26,19 +26,30 @@ class WelcomeViewModel(
     @SuppressLint("PublicKeyCredential")
     override fun onEvent(event: WelcomeEvent) {
         when (event) {
-            WelcomeEvent.OnLoginClick -> {
-
+            WelcomeEvent.OnLoginClick -> viewModelScope.launch {
+                try {
+                    _state.getAndUpdate { it.copy(isLoading = true) }
+                    val response = appRepository.loginStart(state.value.username)
+                    _state.getAndUpdate {
+                        it.copy(
+                            isLoading = false,
+                            getPublicKeyCredentialOption = GetPublicKeyCredentialOption(
+                                requestJson = json.encodeToString(
+                                    response
+                                )
+                            )
+                        )
+                    }
+                } catch (e: Exception) {
+                    handleError(e)
+                    _state.getAndUpdate { it.copy(isLoading = false) }
+                }
             }
 
             WelcomeEvent.OnRegisterClick -> viewModelScope.launch {
                 try {
                     _state.getAndUpdate { it.copy(isLoading = true) }
-
                     val response = appRepository.registerStart(state.value.username)
-
-                    Log.d("YUANA", "RESPONSE")
-                    Log.d("YUANA", response["challenge"]?.jsonPrimitive?.content.orEmpty())
-
                     _state.getAndUpdate {
                         it.copy(
                             isLoading = false,
@@ -57,14 +68,10 @@ class WelcomeViewModel(
             is WelcomeEvent.OnCreateCredentialResponseSuccess -> viewModelScope.launch {
                 try {
                     _state.getAndUpdate { it.copy(isLoading = true) }
-
-                    val result = appRepository.registerFinish(
+                    appRepository.registerFinish(
                         username = state.value.username,
                         response = json.decodeFromString(event.createPublicKeyCredentialResponse.registrationResponseJson)
                     )
-
-                    //save token
-
                     _state.getAndUpdate {
                         it.copy(
                             isLoading = false,
@@ -72,13 +79,48 @@ class WelcomeViewModel(
                         )
                     }
 
-                    sendUiEvent(UiEvent.ShowMessage(message = "Success"))
+                    sendUiEvent(UiEvent.Navigate(
+                        destinationRoute = Screen.Home.route
+                    ) {
+                        popUpTo(Screen.Welcome.route) {
+                            inclusive = true
+                        }
+                    })
 
                 } catch (e: Exception) {
                     handleError(e)
                     _state.getAndUpdate { it.copy(isLoading = false) }
                 }
 
+            }
+
+            is WelcomeEvent.OnGetCredentialResponse -> viewModelScope.launch {
+                try {
+                    _state.getAndUpdate { it.copy(isLoading = true) }
+                    appRepository.loginFinish(
+                        username = state.value.username,
+                        response = json.decodeFromString(event.publicKeyCredential.authenticationResponseJson)
+                    )
+
+                    _state.getAndUpdate {
+                        it.copy(
+                            isLoading = false,
+                            getPublicKeyCredentialOption = null
+                        )
+                    }
+
+                    sendUiEvent(UiEvent.Navigate(
+                        destinationRoute = Screen.Home.route
+                    ) {
+                        popUpTo(Screen.Welcome.route) {
+                            inclusive = true
+                        }
+                    })
+
+                } catch (e: Exception) {
+                    handleError(e)
+                    _state.getAndUpdate { it.copy(isLoading = false) }
+                }
             }
         }
     }

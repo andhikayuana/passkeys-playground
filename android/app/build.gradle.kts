@@ -1,8 +1,14 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-parcelize")
     alias(libs.plugins.jetbrains.kotlin.serialization)
+}
+
+val keystoreProperties = rootProject.file("keystore.properties").inputStream().use {
+    Properties().apply { load(it) }
 }
 
 android {
@@ -22,6 +28,16 @@ android {
         }
     }
 
+
+    signingConfigs {
+        create("key") {
+            keyAlias = keystoreProperties["keyAlias"] as String
+            keyPassword = keystoreProperties["keyPassword"] as String
+            storeFile = file(keystoreProperties["storeFile"] as String)
+            storePassword = keystoreProperties["storePassword"] as String
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -29,7 +45,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("key")
         }
+         debug {
+             signingConfig = signingConfigs.getByName("key")
+         }
 
         val apiBaseUrl: String by project
         buildTypes.onEach {

@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Passkeys Playground Client"
+rootProject.name = "Passkeys Playground Android"
 include(":app")
