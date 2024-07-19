@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
       transports: response.response.transports
     })
 
-    await sessions.deleteOne({ username: username })
+    await sessions.deleteOne({ username: username, type: 'register' })
 
     const token = jwt.sign({ userId: username }, process.env.JWT_SECRET_KEY || 'secret')
 
