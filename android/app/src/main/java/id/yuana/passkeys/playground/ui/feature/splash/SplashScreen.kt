@@ -7,8 +7,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
 import id.yuana.passkeys.playground.R
-import id.yuana.passkeys.playground.navigation.navigation.OnNavigate
-import id.yuana.passkeys.playground.navigation.navigation.UiEvent
+import id.yuana.passkeys.playground.navigation.OnNavigate
+import id.yuana.passkeys.playground.navigation.UiEvent
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

@@ -26,8 +26,8 @@ import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.PublicKeyCredential
 import id.yuana.passkeys.playground.R
-import id.yuana.passkeys.playground.navigation.navigation.OnNavigate
-import id.yuana.passkeys.playground.navigation.navigation.UiEvent
+import id.yuana.passkeys.playground.navigation.OnNavigate
+import id.yuana.passkeys.playground.navigation.UiEvent
 import id.yuana.passkeys.playground.ui.component.LoadingDialog
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject

@@ -3,7 +3,7 @@ package id.yuana.passkeys.playground.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import id.yuana.passkeys.playground.di.json
-import id.yuana.passkeys.playground.navigation.navigation.UiEvent
+import id.yuana.passkeys.playground.navigation.UiEvent
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch

@@ -19,8 +19,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import id.yuana.passkeys.playground.R
-import id.yuana.passkeys.playground.navigation.navigation.OnNavigate
-import id.yuana.passkeys.playground.navigation.navigation.UiEvent
+import id.yuana.passkeys.playground.navigation.OnNavigate
+import id.yuana.passkeys.playground.navigation.UiEvent
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

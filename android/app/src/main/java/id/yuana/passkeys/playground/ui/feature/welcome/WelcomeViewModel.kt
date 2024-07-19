@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import id.yuana.passkeys.playground.base.BaseViewModel
 import id.yuana.passkeys.playground.data.repository.AppRepository
 import id.yuana.passkeys.playground.di.json
-import id.yuana.passkeys.playground.navigation.navigation.Screen
-import id.yuana.passkeys.playground.navigation.navigation.UiEvent
+import id.yuana.passkeys.playground.navigation.Screen
+import id.yuana.passkeys.playground.navigation.UiEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -79,7 +79,8 @@ class WelcomeViewModel(
                         )
                     }
 
-                    sendUiEvent(UiEvent.Navigate(
+                    sendUiEvent(
+                        UiEvent.Navigate(
                         destinationRoute = Screen.Home.route
                     ) {
                         popUpTo(Screen.Welcome.route) {
@@ -109,7 +110,8 @@ class WelcomeViewModel(
                         )
                     }
 
-                    sendUiEvent(UiEvent.Navigate(
+                    sendUiEvent(
+                        UiEvent.Navigate(
                         destinationRoute = Screen.Home.route
                     ) {
                         popUpTo(Screen.Welcome.route) {

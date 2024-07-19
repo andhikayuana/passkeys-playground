@@ -1,4 +1,4 @@
-package id.yuana.passkeys.playground.navigation.navigation
+package id.yuana.passkeys.playground.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder

@@ -3,8 +3,8 @@ package id.yuana.passkeys.playground.ui.feature.home
 import androidx.lifecycle.viewModelScope
 import id.yuana.passkeys.playground.base.BaseViewModel
 import id.yuana.passkeys.playground.data.repository.AppRepository
-import id.yuana.passkeys.playground.navigation.navigation.Screen
-import id.yuana.passkeys.playground.navigation.navigation.UiEvent
+import id.yuana.passkeys.playground.navigation.Screen
+import id.yuana.passkeys.playground.navigation.UiEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,7 +31,8 @@ class HomeViewModel(
 
             HomeEvent.OnLogoutClick -> viewModelScope.launch {
                 appRepository.logout()
-                sendUiEvent(UiEvent.Navigate(
+                sendUiEvent(
+                    UiEvent.Navigate(
                     destinationRoute = Screen.Welcome.route
                 ) {
                     popUpTo(Screen.Home.route) {
