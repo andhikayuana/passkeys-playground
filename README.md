@@ -237,7 +237,7 @@ You can find the Digital Asset Links [here](./server/public/.well-known/assetlin
 
 ## References
 * [passkeys.dev](https://passkeys.dev/)
-* [w3c webauthn](https://www.w3.org/TR/webauthn-2/#sctn-intro)
+* [w3c webauthn 8 Apr 2021](https://www.w3.org/TR/webauthn-2/#sctn-intro) and [w3c webauthn 17 Jul 2024](https://w3c.github.io/webauthn/)
 * [Sign in your user with Credential Manager](https://developer.android.com/identity/sign-in/credential-manager)
 * [WebAuthn Playground](https://opotonniee.github.io/webauthn-playground/)
 * [Auth0 WebAuthn](https://webauthn.me/)
