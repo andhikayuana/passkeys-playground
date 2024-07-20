@@ -66,6 +66,8 @@ You can find the Digital Asset Links [here](./server/public/.well-known/assetlin
 
 ### Example API
 
+`BASE_URL=https://passkeys-playground.yuana.id`
+
 #### [POST] /api/register-start
 
 ##### Request
