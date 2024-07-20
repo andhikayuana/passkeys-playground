@@ -1,5 +1,5 @@
 # passkeys-playground
-Demonstrate passwordless authentication using Passkeys (previously webauthn)
+Demonstrate passwordless authentication using Passkeys (previously webauthn).
 
 ## Requirements
 ### Server
@@ -244,3 +244,5 @@ You can find the Digital Asset Links [here](./server/public/.well-known/assetlin
 * [WebAuthn Playground](https://opotonniee.github.io/webauthn-playground/)
 * [Auth0 WebAuthn](https://webauthn.me/)
 * [passwordlress.id - WebAuthn Playground](https://webauthn.passwordless.id/demos/playground.html)
+* [passkeys from yubico developer website](https://developers.yubico.com/Passkeys)
+* [passkeys.io](https://www.passkeys.io/technical-details)
