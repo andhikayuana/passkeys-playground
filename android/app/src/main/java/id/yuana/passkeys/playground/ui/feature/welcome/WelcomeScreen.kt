@@ -46,15 +46,8 @@ fun WelcomeScreen(
         viewModel.uiEvent.collect { event ->
             when (event) {
                 is UiEvent.Navigate -> onNavigate(event)
-                is UiEvent.ShowMessage -> when (event.type) {
-                    UiEvent.ShowMessage.Type.Error -> Toast.makeText(
-                        context,
-                        event.message,
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    else -> Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
-                }
+                is UiEvent.ShowMessage -> Toast.makeText(context, event.message, Toast.LENGTH_SHORT)
+                    .show()
 
                 else -> Unit
             }
