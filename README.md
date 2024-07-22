@@ -1,6 +1,9 @@
 # passkeys-playground
 Demonstrate passwordless authentication using Passkeys (previously webauthn).
 
+## Slide
+Google I/O Extended Jogjakarta 2024: [here](https://docs.google.com/presentation/d/1LLEvGWkXOyNA0_Xmx0BTddHp5U9lA68-spRNbOYdCWc/edit?usp=sharing)
+
 ## Requirements
 ### Server
 * NodeJS Latest
