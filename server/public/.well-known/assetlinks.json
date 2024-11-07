@@ -11,5 +11,17 @@
           "3E:E1:30:E9:09:B0:80:F4:75:15:A3:C9:C5:5F:06:4D:B3:38:EF:B4:33:D9:FA:B1:E4:2C:C1:83:9A:3F:1D:4A"
         ]
       }
-    }
+    },
+    {
+      "relation": [
+          "delegate_permission/common.handle_all_urls"
+      ],
+      "target": {
+          "namespace": "android_app",
+          "package_name": "com.fallenbug.circuitsimulator",
+          "sha256_cert_fingerprints": [
+              "3E:E1:30:E9:09:B0:80:F4:75:15:A3:C9:C5:5F:06:4D:B3:38:EF:B4:33:D9:FA:B1:E4:2C:C1:83:9A:3F:1D:4A"
+          ]
+      }
+  }
   ]
